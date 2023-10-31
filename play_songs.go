@@ -65,18 +65,22 @@ func play(label string, logger golog.Logger) {
 func main() {
  logger := golog.NewDevelopmentLogger("client")
  robot, err := client.New(
-     context.Background(),
-     "<your-robot-remote-address>.viam.cloud",
-     logger,
-     client.WithDialOptions(rpc.WithCredentials(rpc.Credentials{
-        Type:    utils.CredentialsTypeRobotLocationSecret,
-                  // Replace "<SECRET>" (including brackets) with your robot's secret
-        Payload: "<SECRET>",
+    context.Background(),
+    "ADDRESS FROM THE VIAM APP",
+    logger,
+    client.WithDialOptions(rpc.WithEntityCredentials(
+    // Replace "<API-KEY-ID>" (including brackets) with your robot's api key id
+    "<API-KEY-ID>",
+    rpc.Credentials{
+        Type:    rpc.CredentialsTypeAPIKey,
+        // Replace "<API-KEY>" (including brackets) with your robot's api key
+        Payload: "<API-KEY>",
     })),
- )
+)
  if err != nil {
-     logger.Fatal(err)
+    logger.Fatal(err)
  }
+
 
 
  defer robot.Close(context.Background())
